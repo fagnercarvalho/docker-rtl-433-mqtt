@@ -7,7 +7,7 @@ mosquitto_pub -h $MQTT_HOST -p $MQTT_PORT -t "homeassistant/sensor/outdoor/humid
 
 # get telemetry from RTL 433 and send to MQTT
 # 15909 is the device ID for the sensor we are getting the telemetry, change to your ID
-rtl_433 -F json | jq -c 'select(.id == 15909)' | mosquitto_pub -h $MQTT_HOST -p $MQTT_PORT -t "homeassistant/sensor/balcony/state" -s -l
+rtl_433 -F json | jq -c 'select(.id == 15909)' | mosquitto_pub -h $MQTT_HOST -p $MQTT_PORT -t "homeassistant/sensor/balcony/state" -l
 
 # uncomment to test
 #cat mock-telemetry | jq -c 'select(.id == 15909)' | mosquitto_pub -h $MQTT_HOST -p $MQTT_PORT -t "homeassistant/sensor/balcony/state" -l
