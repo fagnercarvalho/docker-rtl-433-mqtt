@@ -1,0 +1,10 @@
+{
+   "device_class":"temperature",
+   "state_class": "measurement",
+   "state_topic":"homeassistant/sensor/balcony/state",
+   "unit_of_measurement":"°C",
+   "unique_id":"sensor_balcony_temperature",
+   "value_template":"{{ value_json.temperature_C}}",
+   "object_id":"balcony_temperature",
+   "name":"Balcony Temperature"
+}

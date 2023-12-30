@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  docker-rtl-433-mqtt:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    devices:
+      - /dev/bus/usb/001/005:/dev/bus/usb/001/005
+    network_mode: bridge

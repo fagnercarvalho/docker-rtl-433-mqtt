@@ -1,0 +1,10 @@
+{
+   "device_class":"humidity",
+   "state_class": "measurement",
+   "state_topic":"homeassistant/sensor/balcony/state",
+   "unit_of_measurement":"%",
+   "unique_id":"sensor_balcony_humidity",
+   "value_template":"{{ value_json.humidity}}",
+   "object_id":"balcony_humidity",
+   "name":"Balcony Humidity"
+}
