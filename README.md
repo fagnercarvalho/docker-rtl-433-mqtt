@@ -2,19 +2,20 @@
 
 ## TL;DR
 
-This is an app that runs [RTL_433](https://github.com/merbanan/rtl_433) to get data from Radio signals and flow to MQTT via the [Mosquitto](https://mosquitto.org/) broker.
+This is a Go app that runs [RTL_433](https://github.com/merbanan/rtl_433) to get data from Radio signals and flow to MQTT via the [Mosquitto](https://mosquitto.org/) broker.
 
 ## What this does
 
-This is a Docker container that:
-- Send MQTT messages to create sensors in Home Assistant
+This is a containerized app that:
+- Send MQTT messages to create topics in a [Mosquitto](https://mosquitto.org/) MQTT broker
 - Start reading Radio signals from an [RTL-SDR](https://en.wikipedia.org/wiki/Software-defined_radio) (Realtek Software Defined Radio) antenna using [RTL_433](https://github.com/merbanan/rtl_433)
-- Send messages to MQTT via `mosquitto_pub` MQTT client in a format that can be read by Home Assistant
+- Send messages to MQTT via [Eclipse Paho MQTT Go client](https://github.com/eclipse/paho.mqtt.golang) in a format that can be read by Home Assistant
 
 ## Prerequisites
 
 You will need:
 - Docker
+- Make
 - An RTL-SDR USB dongle. I use the `NooElec NESDR Mini USB RTL-SDR` but [RTL_433](https://github.com/merbanan/rtl_433) supports a lot of different models, choose the one that you prefer
 - Home Assistant or something on the other side to consume the MQTT messages
 
@@ -37,9 +38,13 @@ devices:
 
 3. Run Docker Compose
 ```shell
-docker compose up --build
+make run
 ```
 
-If everything goes well you will see the sensor states in Home Assistant like this:
+If everything goes well you will see the sensor states in Home Assistant like this for temperature and humidity outside:
 
-![Home Assistant](home-assistant.png)
+![Home Assistant temperature and humidity outside](home-assistant.png)
+
+And like this for soil moisture (used for plants):
+
+![Home Assistant soil moisture](home-assistant-2.png)
