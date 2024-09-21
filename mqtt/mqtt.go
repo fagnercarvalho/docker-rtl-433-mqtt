@@ -18,12 +18,12 @@ type client[T any] struct {
 	internalClient mqtt.Client
 }
 
-func NewClient[T any](mqttAddress string) (Client[T], error) {
-	if mqttAddress == "" {
-		return nil, errors.New("MQTT address must be provided")
+func NewClient[T any](host string, port string) (Client[T], error) {
+	if host == "" || port == "" {
+		return nil, errors.New("MQTT host and port must be provided")
 	}
 
-	internalClient, err := newClient(mqttAddress)
+	internalClient, err := newClient(host, port)
 	if err != nil {
 		return nil, fmt.Errorf("error to instantiate new MQTT client: %w", err)
 	}
@@ -78,10 +78,10 @@ func (c client[T]) Subscribe(topic string) (<-chan string, <-chan error) {
 	return successCh, errCh
 }
 
-func newClient(address string) (mqtt.Client, error) {
+func newClient(host, port string) (mqtt.Client, error) {
 	clientOptions := mqtt.NewClientOptions()
 
-	parsedURL, err := url.Parse(address)
+	parsedURL, err := url.Parse("mqtt://" + host + ":" + port)
 	if err != nil {
 		return nil, err
 	}

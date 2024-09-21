@@ -3,9 +3,9 @@ package main
 import (
 	"bufio"
 	"encoding/json"
-	"flag"
 	"fmt"
 	"io"
+	"os"
 	"os/exec"
 
 	"github.com/fagnercarvalho/docker-rtl-433-mqtt/mqtt"
@@ -32,16 +32,19 @@ var (
 )
 
 func main() {
-	mqttAddress := flag.String("mqtt-address", "127.0.0.1:1883", "Address + port for MQTT broker to send sensor telemetry")
+	mqttHost := os.Getenv("MQTT_HOST")
+	mqttPort := os.Getenv("MQTT_PORT")
 
-	flag.Parse()
-
-	client, err := mqtt.NewClient[Sensor](*mqttAddress)
+	client, err := mqtt.NewClient[Sensor](mqttHost, mqttPort)
 	if err != nil {
 		panic(err)
 	}
 
+	fmt.Println("Get antenna stream")
+
 	stdoutPipe := getAntennaStream()
+
+	fmt.Println("Reading from stream")
 
 	readFromStream(stdoutPipe, client.PublishMessage)
 }

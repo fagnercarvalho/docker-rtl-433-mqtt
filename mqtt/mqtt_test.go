@@ -16,7 +16,7 @@ type Test struct {
 
 func TestPublishMessage(t *testing.T) {
 	// instantiate MQTT client
-	client, err := NewClient[Test]("mqtt://127.0.0.1:1883")
+	client, err := NewClient[Test]("127.0.0.1", "1883")
 	require.NoError(t, err)
 
 	// subscribe to topic
