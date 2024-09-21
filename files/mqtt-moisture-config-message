@@ -1,0 +1,10 @@
+{
+   "device_class":"moisture",
+   "state_class": "measurement",
+   "state_topic":"homeassistant/sensor/soil/state",
+   "unit_of_measurement":"%",
+   "unique_id":"sensor_soil_moisture",
+   "value_template":"{{ value_json.moisture}}",
+   "object_id":"soil_moisture",
+   "name":"Soil Moisture"
+}

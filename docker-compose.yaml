@@ -10,3 +10,11 @@ services:
     devices:
       - /dev/bus/usb/001/005:/dev/bus/usb/001/005
     network_mode: bridge
+  mqtt:
+    container_name: mqtt
+    image: "eclipse-mosquitto:latest"
+    ports:
+      - 1902:1883
+    volumes:
+      - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf:rw
+      - ./mosquitto/log:/mosquitto/log
