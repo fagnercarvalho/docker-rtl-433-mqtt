@@ -32,22 +32,21 @@ var (
 )
 
 func main() {
-	mqttAddress := flag.String("mqtt-address", "127.0.0.1", "Address for MQTT broker to send sensor telemetry")
-	mqttPort := flag.Int("mqtt-port", 0, "Port for MQTT broker to send sensor telemetry")
+	mqttAddress := flag.String("mqtt-address", "127.0.0.1:1883", "Address + port for MQTT broker to send sensor telemetry")
 
 	flag.Parse()
 
-	client, err := mqtt.NewClient(*mqttAddress, *mqttPort)
+	client, err := mqtt.NewClient[Sensor](*mqttAddress)
 	if err != nil {
 		panic(err)
 	}
 
 	stdoutPipe := getAntennaStream()
 
-	readFromStream(stdoutPipe, mqtt.PublishMessage[Sensor](client))
+	readFromStream(stdoutPipe, client.PublishMessage)
 }
 
-func readFromStream(stdoutPipe io.ReadCloser, publicMqttMessage func(topic string, sensor Sensor)) {
+func readFromStream(stdoutPipe io.ReadCloser, publicMqttMessage func(topic string, sensor Sensor) (<-chan error, error)) {
 	scanner := bufio.NewScanner(stdoutPipe)
 
 	for scanner.Scan() {
@@ -70,7 +69,10 @@ func readFromStream(stdoutPipe io.ReadCloser, publicMqttMessage func(topic strin
 
 		topic := getTopicBySensorID(sensor.IDAsString())
 
-		publicMqttMessage(topic, sensor)
+		_, err = publicMqttMessage(topic, sensor)
+		if err != nil {
+			fmt.Printf("Error when trying to publish message: %v: %v \n", sensor, err)
+		}
 	}
 }
 

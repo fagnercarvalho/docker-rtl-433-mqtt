@@ -27,8 +27,10 @@ func TestReadFromStream(t *testing.T) {
 	}
 
 	var sensors []Sensor
-	readFromStream(stream, func(_ string, sensor Sensor) {
+	readFromStream(stream, func(_ string, sensor Sensor) (<-chan error, error) {
 		sensors = append(sensors, sensor)
+
+		return nil, nil
 	})
 
 	assert.ElementsMatch(t, sensors, expectedSensors)
