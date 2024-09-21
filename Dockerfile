@@ -1,8 +1,6 @@
 
 FROM golang:1.20 AS builder
 
-RUN echo $MQTT_HOST
-
 WORKDIR /app
 
 COPY go.mod go.sum ./
