@@ -27,7 +27,7 @@ func (s Sensor) IDAsString() string {
 }
 
 var (
-	outdoorSensor = "15909"
+	outdoorSensor = "11455"
 	soilSensor    = "0dff63"
 )
 

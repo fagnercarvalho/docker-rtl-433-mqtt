@@ -6,10 +6,10 @@ This is a Go app that runs [RTL_433](https://github.com/merbanan/rtl_433) to get
 
 ## What this does
 
-This is a containerized app that:
-- Send MQTT messages to create topics in a [Mosquitto](https://mosquitto.org/) MQTT broker
+This is a containerized app that will:
+- Sends MQTT messages to create topics in a [Mosquitto](https://mosquitto.org/) MQTT broker
 - Start reading Radio signals from an [RTL-SDR](https://en.wikipedia.org/wiki/Software-defined_radio) (Realtek Software Defined Radio) antenna using [RTL_433](https://github.com/merbanan/rtl_433)
-- Send messages to MQTT via [Eclipse Paho MQTT Go client](https://github.com/eclipse/paho.mqtt.golang) in a format that can be read by Home Assistant
+- Sends messages to MQTT via [Eclipse Paho MQTT Go client](https://github.com/eclipse/paho.mqtt.golang) in a format that can be read by Home Assistant
 
 ## Prerequisites
 
